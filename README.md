@@ -1,89 +1,51 @@
-# 🔐 EdgeIQ OAuth Security Checker
+# OAuth Security Checker — CLI Setup
 
-**Detect OAuth 2.0 misconfigurations and security flaws in web applications.**
-
-Checks redirect URI validation, state parameter integrity, PKCE support, token endpoint security, scope permissions, and implicit flow exposure — comprehensive OAuth auditing.
-
-[![Project Stage](https://img.shields.io/badge/Stage-Beta-blue)](https://edgeiqlabs.com)
-[![Python](https://img.shields.io/badge/Python-3.8+-green)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-orange)](LICENSE)
-
----
-
-## What It Does
-
-Audits OAuth 2.0 implementations for common security misconfigurations: redirect URI validation flaws, missing state parameters, absent PKCE, overly broad scopes, and implicit flow bearer token exposure.
-
-> ⚠️ **Legal Notice:** Only test OAuth integrations you own or have explicit written authorization to audit.
-
----
-
-## Key Features
-
-- **Redirect URI validation** — tests for localhost, null, and wildcard misconfigs
-- **State parameter check** — detects missing or weak CSRF protection
-- **PKCE support detection** — identifies apps missing code challenge
-- **Token endpoint security** — checks TLS, token format, expiration
-- **Scope analysis** — flags overly broad permissions
-- **Implicit flow detection** — warns about bearer token exposure
-- **Authorization server fingerprinting** — identifies provider and version
-- **JSON export** — structured audit results
-
----
+A OAuth 2.0 security misconfiguration scanner for web applications you own or have permission to audit.
 
 ## Prerequisites
 
 - Python 3.8+
-- `requests` library
-
----
 
 ## Installation
 
 ```bash
 git clone https://github.com/snipercat69/edgeiq-oauth-security-checker.git
 cd edgeiq-oauth-security-checker
-pip install -r requirements.txt
 ```
-
----
 
 ## Quick Start
 
 ```bash
-# Check a site's OAuth configuration
-python3 oauth_checker.py --domain example.com
+# Free scan
+python3 oauth_checker.py --url "https://example.com/oauth/authorize?client_id=YOUR_ID&redirect_uri=https://example.com/callback&response_type=code&scope=read"
 
-# Audit a specific authorization endpoint
-python3 oauth_checker.py --auth-url "https://auth.example.com/authorize" --client-id "your_client_id"
+# Pro scan
+EDGEIQ_EMAIL=your_email@gmail.com python3 oauth_checker.py \
+  --url "https://example.com/oauth/authorize?client_id=YOUR_ID&redirect_uri=https://example.com/callback&response_type=code&scope=read write" \
+  --pro
 
-# JSON audit report
-python3 oauth_checker.py --domain example.com --format json --output oauth-audit.json
+# Bundle scan with JSON export
+EDGEIQ_EMAIL=your_email@gmail.com python3 oauth_checker.py \
+  --url "https://example.com/oauth/authorize?client_id=YOUR_ID&redirect_uri=https://example.com/callback&response_type=code" \
+  --bundle --output oauth-report.json
 ```
 
----
+## Features
 
-## Pricing
+- Redirect URI validation (localhost, null, wildcard checks)
+- State parameter CSRF protection check
+- PKCE support detection
+- Response type analysis (implicit flow warnings)
+- Scope permission analysis
+- Authorization server security probing
+- JSON export for reporting
 
-| Tier | Price | Features |
-|------|-------|----------|
-| **Free** | $0 | 5 URIs/month, basic checks |
-| **Lifetime** | $39 one-time | Unlimited audits, full analysis, provider fingerprinting |
-| **Monthly** | $7/mo | All Lifetime features, billed monthly |
+## ⚠️ Legal Notice
 
----
+Only audit OAuth integrations you own or have explicit written authorization to test.
 
-## Integration with EdgeIQ Tools
+## Licensing
 
-- **[EdgeIQ API Endpoint Discovery](https://github.com/snipercat69/edgeiq-api-endpoint-discovery)** — audit discovered OAuth flows
-- **[EdgeIQ Alerting System](https://github.com/snipercat69/edgeiq-alerting-system)** — alert on OAuth findings
+Free tier: basic checks (5 URIs).
 
----
-
-## Support
-
-Open an issue at: https://github.com/snipercat69/edgeiq-oauth-security-checker/issues
-
----
-
-*Part of EdgeIQ Labs — [edgeiqlabs.com](https://edgeiqlabs.com)*
+Pro ($19/mo) or Bundle ($39/mo): [buy.stripe.com/aFa00l9i3bxrcUs18c7wA0k](https://buy.stripe.com/aFa00l9i3bxrcUs18c7wA0k)
